@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5000/graphql'
+  apiUrl: 'https://one01492625-comp3133-assignment1.onrender.com/graphql'
 };

@@ -1,0 +1,104 @@
+<div class="page-wrapper">
+
+  <!-- Skeleton -->
+  <div *ngIf="loading" class="skeleton-wrap">
+    <div class="skeleton hero-skel"></div>
+    <div class="skeleton fields-skel"></div>
+  </div>
+
+  <ng-container *ngIf="!loading && employee">
+
+    <!-- Header actions -->
+    <div class="top-bar">
+      <button mat-icon-button (click)="back()" class="back-btn">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <span class="breadcrumb">Employees / {{ employee.first_name }} {{ employee.last_name }}</span>
+      <span class="spacer"></span>
+      <button mat-stroked-button (click)="edit()" class="edit-btn">
+        <mat-icon>edit</mat-icon> Edit
+      </button>
+      <button mat-icon-button color="warn" (click)="delete()" matTooltip="Delete employee">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </div>
+
+    <!-- Hero card -->
+    <div class="hero-card">
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <div class="avatar-wrap">
+          <img
+            *ngIf="employee.employee_photo"
+            [src]="employee.employee_photo"
+            class="avatar-img"
+            alt="Photo">
+          <div *ngIf="!employee.employee_photo" class="avatar-initials">
+            {{ getInitials() }}
+          </div>
+        </div>
+        <div class="hero-info">
+          <h1 class="emp-name">{{ employee.first_name }} {{ employee.last_name }}</h1>
+          <p class="emp-role">{{ employee.designation }}</p>
+          <div class="tags">
+            <span class="tag dept-tag">{{ employee.department }}</span>
+            <span class="tag gender-tag">{{ employee.gender }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detail grid -->
+    <div class="detail-grid">
+
+      <div class="detail-card">
+        <h2 class="section-title">Contact</h2>
+        <div class="detail-item">
+          <mat-icon class="item-icon">mail_outline</mat-icon>
+          <div>
+            <span class="item-label">Email</span>
+            <span class="item-value">{{ employee.email }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        <h2 class="section-title">Employment</h2>
+        <div class="detail-item">
+          <mat-icon class="item-icon">work_outline</mat-icon>
+          <div>
+            <span class="item-label">Designation</span>
+            <span class="item-value">{{ employee.designation }}</span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <mat-icon class="item-icon">business</mat-icon>
+          <div>
+            <span class="item-label">Department</span>
+            <span class="item-value">{{ employee.department }}</span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <mat-icon class="item-icon">calendar_today</mat-icon>
+          <div>
+            <span class="item-label">Date of joining</span>
+            <span class="item-value">{{ formatDate(employee.date_of_joining) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        <h2 class="section-title">Compensation</h2>
+        <div class="detail-item">
+          <mat-icon class="item-icon">attach_money</mat-icon>
+          <div>
+            <span class="item-label">Annual salary</span>
+            <span class="item-value salary">{{ employee.salary | currency:'CAD':'symbol':'1.0-0' }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </ng-container>
+</div>

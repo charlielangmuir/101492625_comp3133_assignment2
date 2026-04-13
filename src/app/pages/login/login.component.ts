@@ -11,7 +11,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class LoginComponent {
   form: FormGroup;
+
   loading = false;
+  hidePassword = true;
 
   constructor(
     private fb: FormBuilder,
@@ -25,17 +27,25 @@ export class LoginComponent {
     });
   }
 
+  get email() { return this.form.get('email'); }
+  get password() { return this.form.get('password'); }
+
   submit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     this.loading = true;
     const { email, password } = this.form.value;
+
     this.auth.login(email!, password!).subscribe({
       next: (res: any) => {
         this.auth.setToken(res.data.login.token);
+        this.snack.open('Welcome back!', '', { duration: 2000 });
         this.router.navigate(['/employees']);
       },
-      error: (err) => {
-        this.snack.open(err.message, 'Close', { duration: 3000 });
+      error: (err: any) => {
+        this.snack.open(err.message || 'Login failed', 'Close', { duration: 4000 });
         this.loading = false;
       }
     });

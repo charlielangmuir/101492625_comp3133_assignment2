@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import {
   GET_EMPLOYEES, GET_EMPLOYEE, ADD_EMPLOYEE,
   UPDATE_EMPLOYEE, DELETE_EMPLOYEE, SEARCH_EMPLOYEES
-} from '../../graphql/employee-queries';
+} from '../../graphql/employee.queries';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {

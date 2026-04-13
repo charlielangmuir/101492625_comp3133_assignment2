@@ -43,7 +43,7 @@ export class EmployeeListComponent implements OnInit {
     if (!confirm('Delete this employee?')) return;
     this.empService.delete(id).subscribe({
       next: () => this.snack.open('Employee deleted', 'OK', { duration: 2000 }),
-      error: (e) => this.snack.open(e.message, 'Close', { duration: 3000 })
+      error: (e: any) => this.snack.open(e.message, 'Close', { duration: 3000 })
     });
   }
 

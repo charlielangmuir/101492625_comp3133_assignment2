@@ -19,11 +19,17 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { App } from './app';
 import { LoginComponent } from './pages/login/login.component';
+import { SignupComponent } from './pages/signup/signup.component';
 import { EmployeeListComponent } from './pages/employee-list/employee-list.component';
+import { EmployeeAddComponent } from './pages/employee-add/employee-add.component';
+import { EmployeeDetailComponent } from './pages/employee-detail/employee-detail.component';
+import { EmployeeEditComponent } from './pages/employee-edit/employee-edit.component';
 import { SearchPipe } from './shared/pipes/search.pipe';
 
 export function createApollo(httpLink: HttpLink) {
@@ -41,7 +47,11 @@ export function createApollo(httpLink: HttpLink) {
   declarations: [
     App,
     LoginComponent,
+    SignupComponent,
     EmployeeListComponent,
+    EmployeeAddComponent,
+    EmployeeDetailComponent,
+    EmployeeEditComponent,
     SearchPipe
   ],
   imports: [
@@ -49,7 +59,8 @@ export function createApollo(httpLink: HttpLink) {
     HttpClientModule, BrowserAnimationsModule, ApolloModule,
     MatToolbarModule, MatCardModule, MatInputModule, MatButtonModule,
     MatTableModule, MatIconModule, MatDialogModule, MatSnackBarModule,
-    MatSelectModule, MatFormFieldModule
+    MatSelectModule, MatFormFieldModule, MatProgressSpinnerModule,
+    MatTooltipModule
   ],
   providers: [{ provide: APOLLO_OPTIONS, useFactory: createApollo, deps: [HttpLink] }],
   bootstrap: [App]

@@ -1,0 +1,116 @@
+<div class="page-wrapper">
+  <div class="page-header">
+    <button mat-icon-button (click)="cancel()" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div>
+      <h1 class="page-title">Add Employee</h1>
+      <p class="page-sub">Fill in the details below to create a new record</p>
+    </div>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="form-grid">
+
+      <!-- LEFT: Photo upload -->
+      <div class="photo-panel">
+        <div class="photo-upload-area" (click)="photoInput.click()" [class.has-photo]="photoPreview">
+          <img *ngIf="photoPreview" [src]="photoPreview" class="photo-preview" alt="Preview">
+          <div *ngIf="!photoPreview" class="upload-placeholder">
+            <mat-icon class="upload-icon">add_photo_alternate</mat-icon>
+            <p class="upload-label">Upload photo</p>
+            <p class="upload-hint">PNG, JPG up to 2MB</p>
+          </div>
+          <input #photoInput type="file" accept="image/*" hidden (change)="onFileSelected($event)">
+        </div>
+        <div *ngIf="photoName" class="photo-meta">
+          <mat-icon>image</mat-icon>
+          <span>{{ photoName }}</span>
+          <button mat-icon-button type="button" (click)="removePhoto()" class="remove-btn">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- RIGHT: Form fields -->
+      <div class="fields-panel">
+
+        <div class="field-row">
+          <mat-form-field appearance="outline" class="field">
+            <mat-label>First name</mat-label>
+            <input matInput formControlName="first_name" placeholder="John">
+            <mat-error *ngIf="f['first_name'].hasError('required')">First name is required</mat-error>
+            <mat-error *ngIf="f['first_name'].hasError('minlength')">At least 2 characters</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="field">
+            <mat-label>Last name</mat-label>
+            <input matInput formControlName="last_name" placeholder="Doe">
+            <mat-error *ngIf="f['last_name'].hasError('required')">Last name is required</mat-error>
+            <mat-error *ngIf="f['last_name'].hasError('minlength')">At least 2 characters</mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="field full">
+          <mat-label>Email address</mat-label>
+          <mat-icon matPrefix>mail_outline</mat-icon>
+          <input matInput formControlName="email" type="email" placeholder="john@company.com">
+          <mat-error *ngIf="f['email'].hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="f['email'].hasError('email')">Enter a valid email</mat-error>
+        </mat-form-field>
+
+        <div class="field-row">
+          <mat-form-field appearance="outline" class="field">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender">
+              <mat-option *ngFor="let g of genders" [value]="g">{{ g }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="f['gender'].hasError('required')">Gender is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="field">
+            <mat-label>Department</mat-label>
+            <mat-select formControlName="department">
+              <mat-option *ngFor="let d of departments" [value]="d">{{ d }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="f['department'].hasError('required')">Department is required</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="field-row">
+          <mat-form-field appearance="outline" class="field">
+            <mat-label>Designation / Title</mat-label>
+            <mat-icon matPrefix>work_outline</mat-icon>
+            <input matInput formControlName="designation" placeholder="Software Engineer">
+            <mat-error *ngIf="f['designation'].hasError('required')">Designation is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="field">
+            <mat-label>Salary (CAD)</mat-label>
+            <mat-icon matPrefix>attach_money</mat-icon>
+            <input matInput formControlName="salary" type="number" min="0" placeholder="75000">
+            <mat-error *ngIf="f['salary'].hasError('required')">Salary is required</mat-error>
+            <mat-error *ngIf="f['salary'].hasError('min')">Must be a positive value</mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="field full">
+          <mat-label>Date of joining</mat-label>
+          <mat-icon matPrefix>calendar_today</mat-icon>
+          <input matInput formControlName="date_of_joining" type="date">
+          <mat-error *ngIf="f['date_of_joining'].hasError('required')">Date is required</mat-error>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-stroked-button type="button" (click)="cancel()" class="cancel-btn">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="loading">
+            <mat-spinner *ngIf="loading" diameter="18"></mat-spinner>
+            <mat-icon *ngIf="!loading">person_add</mat-icon>
+            <span>{{ loading ? 'Saving...' : 'Add Employee' }}</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>

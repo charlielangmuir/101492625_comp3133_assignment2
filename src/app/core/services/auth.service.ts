@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Router } from '@angular/router';
-import { LOGIN_MUTATION, SIGNUP_MUTATION } from '../../graphql/auth.queries';
+import { LOGIN_QUERY, SIGNUP_MUTATION } from '../../graphql/auth.queries';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -11,19 +11,20 @@ export class AuthService {
 
   constructor(private apollo: Apollo, private router: Router) {}
 
-  login(email: string, password: string) {
-    return this.apollo.mutate({
-      mutation: LOGIN_MUTATION,
-      variables: { email, password }
-    });
-  }
+  login(usernameOrEmail: string, password: string) {
+  return this.apollo.query({          
+    query: LOGIN_QUERY,
+    variables: { usernameOrEmail, password },
+    fetchPolicy: 'no-cache'           
+  });
+}
 
-  signup(username: string, email: string, password: string) {
-    return this.apollo.mutate({
-      mutation: SIGNUP_MUTATION,
-      variables: { username, email, password }
-    });
-  }
+signup(username: string, email: string, password: string) {
+  return this.apollo.mutate({
+    mutation: SIGNUP_MUTATION,
+    variables: { username, email, password }
+  });
+}
 
   setToken(token: string) {
     localStorage.setItem('token', token);
